@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 from .models import ContactMessage
 
-class ContactMassageForm(forms.ModelForm):
+class ContactMessageForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
         fields =['name', 'contact_type', 'contact_value', 'message']

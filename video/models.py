@@ -1,17 +1,38 @@
 from django.db import models
-from django.utils.text import slugify
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, verbose_name='')
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
 
-class Video(models.Model):
-    name = models.CharField(max_length=200, verbose_name='') #nazvanie
-    pub_date = models.DateTimeField('date published') #data publikacii
-    video_url = models.URLField() #ssylka na video
-    oblozhka_url = models.URLField()
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='projects/')
+    video_url = models.URLField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='projects'
+    )
+    def __str__(self):
+        return self.title
 
-class Meta:
-    ordering = ['category', '-published']
+    class Meta:
+        ordering = ['created_at']
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
 
-def _str__(self):
-    return self.title
+    class ContactMessage(models.Model):
+        CONTACT_CHOISES = [
+            ('email', 'Email'),
+            ('phone', 'Телефон')
+            ('vk', 'Вконтакте')
+        ]
+        name = models.CharField(max_length=100)
+        contact_type = models.CharField(max_length=50, choices=[CONTACT_CHOISES])
+        contact_value = models.CharField(max_length=200)
+        massage = models.TextField()
+        send_at = models.DateField(auto_now_add=True)

@@ -42,7 +42,7 @@ class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     contact_type = models.CharField(max_length=50, choices=CONTACT_CHOISES)
     contact_value = models.CharField(max_length=200)
-    massage = models.TextField()
+    message = models.TextField()
     sent_at = models.DateField(auto_now_add=True)  
 
     def __str__(self):

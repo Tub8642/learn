@@ -15,7 +15,7 @@ class Category(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='projects/')
+    image = models.ImageField(upload_to='projects/', null=True, blank=True)
     video_url = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(

@@ -17,11 +17,11 @@
         {% for project in projects %}
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                {% if project.cover %}
-                <img src="{{ project.cover.url }}" class="card-img-top" alt="{{ project.name }}">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.name }}">
                 {% endif %}
                 <div class="card-body">
-                    <h5 class="card-title">{{ project.name }}</h5>
+                    <h5 class="card-title">{{ project.title }}</h5>
                     <p class="card-text">{{ project.description|default:"Без описания" }}</p>
                     <a href="{{ project.video_url }}" class="btn btn-outline-primary" target="_blank">Смотреть видео</a>
                 </div>

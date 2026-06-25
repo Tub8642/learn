@@ -14,9 +14,12 @@
                     {{ form.name.errors }}
                 </div>
                 <div class="mb-3">
-                    <label for="id_email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="id_email" value="{{ form.email.value|default:'' }}">
-                    {{ form.email.errors }}
+                    <label for="id_contact_type" class="form-label">Способ связи</label>
+                    <select name="contact_type" id="id_contact_type" class="form-select">
+                        <option value="email">Email</option>
+                        <option value="phone">Телефон</option>
+                        <option value="vk">Вконтакте</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="id_message" class="form-label">Сообщение</label>

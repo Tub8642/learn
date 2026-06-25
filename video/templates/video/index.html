@@ -1,39 +1,35 @@
 {% extends 'video/base.html' %}
-{% load static %}
 
 {% block content %}
-    <!-- Шапка в стиле Grayscale (можно вставить свою картинку) -->
-    <header class="masthead" style="background-image: url('https://startbootstrap.github.io/startbootstrap-grayscale/assets/img/bg-masthead.jpg')">
-        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-            <div class="d-flex justify-content-center">
-                <div class="text-center">
-                    <h1 class="mx-auto my-0 text-uppercase">Твоё имя</h1>
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Видеограф, создающий эмоции</h2>
-                    <a class="btn btn-primary" href="{% url 'contact' %}">Связаться</a>
+<div class="container py-5">
+    <div class="row justify-content-center text-center">
+        <div class="col-lg-8">
+            <h1 class="display-1 fw-bold">Vidnast</h1>
+            <p class="lead">Видеограф, создающий эмоции</p>
+            <a href="#projects" class="btn btn-primary btn-lg rounded-pill px-5">Перейти к работам ↓</a>
+        </div>
+    </div>
+</div>
+
+<div id="projects" class="container py-5">
+    <h2 class="text-center mb-4">Мои работы</h2>
+    <div class="row">
+        {% for project in projects %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if project.cover %}
+                <img src="{{ project.cover.url }}" class="card-img-top" alt="{{ project.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.name }}</h5>
+                    <p class="card-text">{{ project.description|default:"Без описания" }}</p>
+                    <a href="{{ project.video_url }}" class="btn btn-outline-primary" target="_blank">Смотреть видео</a>
                 </div>
             </div>
         </div>
-    </header>
-
-    <!-- Проекты -->
-    <section class="projects-section bg-light" id="projects">
-        <div class="container px-4 px-lg-5">
-            <h2 class="text-center mb-5">Мои работы</h2>
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                {% for project in projects %}
-                    <div class="col-lg-4 col-md-6 mb-5">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="{{ project.oblozhka_url }}" alt="{{ project.name }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ project.name }}</h5>
-                                <a href="{{ project.video_url }}" class="btn btn-outline-primary" target="_blank">Смотреть видео</a>
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>Пока нет проектов.</p>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
+        {% empty %}
+        <p>Пока нет проектов.</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import Project
 from .forms import ContactMessageForm
 
@@ -11,10 +12,7 @@ def contact_view(request):
         form = ContactMessageForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('thanks')
+            return redirect('home')
     else:
         form = ContactMessageForm()
     return render(request, 'video/contact.html', {'form': form})
-
-def thanks_view(request):
-    return render(request, 'video/thanks.html')

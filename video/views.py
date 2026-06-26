@@ -12,6 +12,7 @@ def contact_view(request):
         form = ContactMessageForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Спасибо за обращение! Я свяжусь с вами в ближайшее время')
             return redirect('home')
     else:
         form = ContactMessageForm()

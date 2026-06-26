@@ -8,11 +8,13 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
+
                 <div class="mb-3">
                     <label for="id_name" class="form-label">Имя</label>
                     <input type="text" name="name" class="form-control" id="id_name" value="{{ form.name.value|default:'' }}">
                     {{ form.name.errors }}
                 </div>
+
                 <div class="mb-3">
                     <label for="id_contact_type" class="form-label">Способ связи</label>
                     <select name="contact_type" id="id_contact_type" class="form-select">
@@ -20,12 +22,23 @@
                         <option value="phone">Телефон</option>
                         <option value="vk">Вконтакте</option>
                     </select>
+                    {{ form.contact_type.errors }}
                 </div>
+
+                <div class="mb-3">
+                    <label for="id_contact_value" class="form-label">Контактные данные</label>
+                    <input type="text" name="contact_value" class="form-control" id="id_contact_value"
+                           placeholder="Введите email, телефон или ссылку ВК"
+                           value="{{ form.contact_value.value|default:'' }}">
+                    {{ form.contact_value.errors }}
+                </div>
+
                 <div class="mb-3">
                     <label for="id_message" class="form-label">Сообщение</label>
                     <textarea name="message" class="form-control" id="id_message" rows="4">{{ form.message.value|default:'' }}</textarea>
                     {{ form.message.errors }}
                 </div>
+
                 <button type="submit" class="btn btn-primary w-100">Отправить</button>
             </form>
         </div>

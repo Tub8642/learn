@@ -12,44 +12,50 @@
     
     {% block extra_css %}{% endblock %}
 </head>
-<body id="page-top">
- {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+<!-- ✅ Добавлены классы для прижатия футера -->
+<body id="page-top" class="d-flex flex-column min-vh-100">
+
+    <!-- Сообщения (flash) -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Меню -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Vidnast</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Работы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Контакты</a></li>
+                </ul>
+            </div>
         </div>
-    {% endfor %}
- {% endif %}
-    <!-- Меню (пока сделаем простую навигацию) -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="{% url 'home' %}">Vidnast</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Главная</a></li>
-        <li class="nav-item"><a class="nav-link" href="#projects">Работы</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Контакты</a></li>
-      </ul>
-    </div>
-  </div>
- </nav>
+    </nav>
 
-
-    <!-- Основной контент страниц -->
-    <main>
+    <!-- Основной контент — растягивается, прижимая футер -->
+    <main class="flex-grow-1">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Подвал -->
+    <!-- Подвал (оставлен как у тебя был) -->
     <footer class="footer bg-black small text-center text-white-50">
-        <div class="container px-4 px-lg-5">Copyright &copy; Твой сайт 2024</div>
+        <div class="container px-4 px-lg-5">
+            Copyright &copy; Твой сайт 2024
+        </div>
     </footer>
 
-    <!-- JS скрипты (тоже через CDN) -->
+    <!-- JS скрипты (обе ссылки восстановлены) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/StartBootstrap/startbootstrap-grayscale@master/dist/js/scripts.js"></script>
     {% block extra_js %}{% endblock %}

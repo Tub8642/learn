@@ -1,35 +1,102 @@
 {% extends 'video/base.html' %}
+{% load static %}
 
 {% block content %}
+<!-- Hero-блок -->
 <div class="container py-5">
     <div class="row justify-content-center text-center">
         <div class="col-lg-8">
             <h1 class="display-1 fw-bold">Vid.Nast</h1>
             <p class="lead">Видеограф, создающий эмоции</p>
-            <a href="#projects" class="btn btn-primary btn-lg rounded-pill px-5">Перейти к работам ↓</a>
+            <!-- Кнопка "Обо мне" вместо "Перейти к работам" -->
+            <a href="#about" class="btn btn-outline-light btn-lg rounded-pill px-5 mt-3">Обо мне ↓</a>
         </div>
     </div>
 </div>
 
+<!-- Блок с проектами и фильтрацией -->
 <div id="projects" class="container py-5">
     <h2 class="text-center mb-4">Мои работы</h2>
-    <div class="row">
-        {% for project in projects %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                {% if project.image %}
-                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.name }}">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text">{{ project.description|default:"Без описания" }}</p>
-                    <a href="{{ project.video_url }}" class="btn btn-outline-primary" target="_blank">Смотреть видео</a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <p>Пока нет проектов.</p>
+
+    <!-- Фильтры по категориям -->
+    <div class="text-center mb-4">
+        <a href="{% url 'home' %}" class="btn btn-outline-secondary {% if not selected_category %}active{% endif %}">Все</a>
+        {% for cat in categories %}
+            <a href="?category={{ cat.slug }}" class="btn btn-outline-secondary {% if selected_category == cat.slug %}active{% endif %}">
+                {{ cat.name }}
+            </a>
         {% endfor %}
     </div>
+
+    {% if selected_category %}
+        <!-- Если выбран фильтр — показываем проекты одной категории -->
+        <div class="row">
+            {% for project in projects %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if project.image %}
+                            <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                        {% else %}
+                            <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">Нет обложки</div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.description|default:"Без описания"|truncatechars:100 }}</p>
+                            <a href="{{ project.video_url }}" class="btn btn-outline-primary" target="_blank">Смотреть видео</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center">Нет проектов в этой категории.</p>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Если фильтр не выбран — группируем проекты по категориям -->
+        {% for category in categories %}
+            <h3 class="mt-4 mb-3">{{ category.name }}</h3>
+            <div class="row">
+                {% for project in category.project_set.all %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            {% if project.image %}
+                                <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                            {% else %}
+                                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height:200px;">Нет обложки</div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ project.title }}</h5>
+                                <p class="card-text">{{ project.description|default:"Без описания"|truncatechars:100 }}</p>
+                                <a href="{{ project.video_url }}" class="btn btn-outline-primary" target="_blank">Смотреть видео</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>В этой категории пока нет проектов.</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
+
+<!-- Секция "Обо мне" -->
+<section id="about" class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-cen
+category.name
+category.name
+ter">
+                <!-- Положи своё фото в static/img/me.jpg -->
+                <img src="{% static 'img/me.jpg' %}" alt="Фото" class="img-fluid rounded-circle" style="max-width: 250px;">
+            </div>
+            <div class="col-md-8">
+                <h2 class="mb-3">Обо мне</h2>
+                <p class="lead">Я видеограф с 5-летним опытом работы.</p>
+                <p>Снимаю свадьбы, мероприятия, рестораны и личные проекты. Люблю экспериментировать с цветом и светом.</p>
+                <p><strong>Опыт:</strong> работал с крупными брендами, снимал клипы, рекламные ролики, документальные фильмы.</p>
+                <p><em>«В каждом кадре я ищу историю»</em></p>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

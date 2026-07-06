@@ -1,11 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Project
+from .models import Project, Category
 from .forms import ContactMessageForm
 
 def project_list(request):
-    projects = Project.objects.all()
-    return render(request, 'video/index.html', {'projects': projects})
+    categories = Category.objects.all()
+    selected_category = request.GET.get('category')
+    if selected_category:
+        projects = Project.objects.filter(category_slug=selected_category)
+    else:
+        projects = Project.objects.all()
+    context = {
+        'projects': projects,
+        'categories': categories,
+        'selected_category': selected_category,
+    }
+    return render(request, 'video/index.html', context)
 
 def contact_view(request):
     if request.method == 'POST':

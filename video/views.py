@@ -7,7 +7,7 @@ def project_list(request):
     categories = Category.objects.all()
     selected_category = request.GET.get('category')
     if selected_category:
-        projects = Project.objects.filter(category_slug=selected_category)
+        projects = Project.objects.filter(category__slug=selected_category)
     else:
         projects = Project.objects.all()
     context = {

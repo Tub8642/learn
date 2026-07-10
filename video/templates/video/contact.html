@@ -9,12 +9,15 @@
                 {% csrf_token %}
                 {{ form.non_field_errors }}
 
+                <!-- Имя -->
                 <div class="mb-3">
                     <label for="id_name" class="form-label">Имя</label>
-                    <input type="text" name="name" class="form-control" id="id_name" value="{{ form.name.value|default:'' }}">
+                    <input type="text" name="name" class="form-control" id="id_name" 
+                           value="{{ form.name.value|default:'' }}">
                     {{ form.name.errors }}
                 </div>
 
+                <!-- Способ связи -->
                 <div class="mb-3">
                     <label for="id_contact_type" class="form-label">Способ связи</label>
                     <select name="contact_type" id="id_contact_type" class="form-select">
@@ -25,6 +28,7 @@
                     {{ form.contact_type.errors }}
                 </div>
 
+                <!-- Контактные данные -->
                 <div class="mb-3">
                     <label for="id_contact_value" class="form-label">Контактные данные</label>
                     <input type="text" name="contact_value" class="form-control" id="id_contact_value"
@@ -33,6 +37,7 @@
                     {{ form.contact_value.errors }}
                 </div>
 
+                <!-- Сообщение -->
                 <div class="mb-3">
                     <label for="id_message" class="form-label">Сообщение</label>
                     <textarea name="message" class="form-control" id="id_message" rows="4">{{ form.message.value|default:'' }}</textarea>

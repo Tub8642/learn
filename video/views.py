@@ -2,6 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Project, Category
 from .forms import ContactMessageForm
+from rest_framework import viewsets
+from .serializers import ProjectSerializers
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializers
 
 def project_list(request):
     categories = Category.objects.all()

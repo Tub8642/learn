@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from .models import ContactMessage
 from .telegram_utils import send_telegram_message
 
-post_save, sender=ContactMessage
+@receiver (post_save, sender=ContactMessage)
 def notify_about_new_message(sender, instance, created, **kwargs):
     if created:  # Отправляем уведомление только при создании, а не при обновлении
         message_text = (
